@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        
+        {% block stylesheets %}
+        <link rel="shortcut icon" href="{{ asset('front/images/favicon.ico') }}" type="image/x-icon">
+        <link rel="apple-touch-icon" href="{{ asset('front/images/apple-touch-icon.png') }}">
+        
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="{{ asset('front/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('front/css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('front/css/responsive.css') }}">
+        <link rel="stylesheet" href="{{ asset('front/css/custom.css') }}">
+        <link rel="stylesheet" href="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css')}}">
+
+        {% endblock %}
+
+        {% block javascripts %}
+        <!-- JS Files -->
+        <script src="{{ asset('front/js/jquery-3.2.1.min.js') }}"></script>
+        <script src="{{ asset('front/js/popper.min.js') }}"></script>
+        <script src="{{ asset('front/js/bootstrap.min.js') }}"></script>
+        
+        <!-- Plugins -->
+        <script src="{{ asset('front/js/jquery.superslides.min.js') }}"></script>
+        <script src="{{ asset('front/js/owl.carousel.min.js') }}"></script>
+        <script src="{{ asset('front/js/custom.js') }}"></script>
+        
+        <script>
+            $(document).ready(function () {
+                if ($("#slides-shop").length) {
+                    $('#slides-shop').superslides({
+                        animation: 'fade',
+                        play: 5000,
+                        pagination: true
+                    });
+                }
+            });
+        </script>
+
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body style="background-color: white;">
+        {% block body %}
+        <script src="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js')}}" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/scripts.js')}}"></script>
+        <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js')}}" crossorigin="anonymous"></script>
+        <script src="{{ asset('assets/demo/chart-area-demo.js')}}"></script>
+        <script src="{{ asset('assets/demo/chart-bar-demo.js')}}"></script>
+        <script src="{{ asset('https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js')}}" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/datatables-simple-demo.js')}}"></script>
+        <script src="{{ asset('https://use.fontawesome.com/releases/v6.3.0/js/all.js')}}" crossorigin="anonymous"></script>
+        {% endblock %}
+    </body>
+</html>

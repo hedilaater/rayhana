@@ -1,0 +1,30 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Nouvelle Réponse{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">✉️ Ajouter une Réponse</h3>
+        </div>
+        <div class="card-body">
+            {{ form_start(form) }}
+            <div class="mb-3">
+                {{ form_label(form.contenu, '📝 Contenu de la Réponse', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.contenu, {'attr': {'class': 'form-control', 'rows': 5, 'placeholder': 'Écrivez votre réponse ici...'}}) }}
+                {{ form_errors(form.contenu) }}
+            </div>
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i> Enregistrer
+            </button>
+            {{ form_end(form) }}
+        </div>
+        <div class="card-footer text-end">
+            <a href="{{ path('app_reclamation_adminn_index') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Retour à la liste
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

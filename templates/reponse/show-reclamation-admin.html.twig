@@ -1,0 +1,50 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">📩 Détails de la Réclamation</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th class="bg-light">ID</th>
+                        <td>{{ reclamation.id }}</td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light">📅 Date</th>
+                        <td>{{ reclamation.dateRec ? reclamation.dateRec|date('Y-m-d') : 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light">👤 Nom</th>
+                        <td>{{ reclamation.nameRec }}</td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light">📧 Email</th>
+                        <td>{{ reclamation.emailRec }}</td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light">🔄 État</th>
+                        <td>
+                            <span class="badge {% if reclamation.etat == 'En cour' %}bg-warning text-dark{% elseif reclamation.etat == 'Finish' %}bg-success{% else %}bg-secondary{% endif %}">
+                                {{ reclamation.etat }}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light">📝 Message</th>
+                        <td>{{ reclamation.messageRec }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-end">
+            <a href="{{ path('app_reclamation_adminn_index') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Retour à la liste
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
