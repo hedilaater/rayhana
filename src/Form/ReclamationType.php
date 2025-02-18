@@ -51,6 +51,12 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Validator\Constraints\Regex;
+
 
 class ReclamationType extends AbstractType
 {
@@ -66,18 +72,38 @@ class ReclamationType extends AbstractType
             ],
             'placeholder' => 'Sélectionnez une catégorie',
             'required' => true, 
+            'constraints' => [
+                    new NotBlank(null, 'Category cannot be empty.'),
+                ],
         ])
         ->add('message_rec', TextareaType::class, [
             'label' => 'Message',
-            'required' => true, // Ensures the field is required
+            'required' => true,
+            'constraints' => [
+                    new NotBlank(null, 'Message cannot be empty.'),
+                ],
         ])
         ->add('name_rec', TextType::class, [
             'label' => 'Nom',
-            'required' => true, // Makes the field mandatory
+            'required' => true,
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'The name cannot be empty.'
+                ]),
+                new Regex([
+                    'pattern' => '/^[a-zA-Z\s]+$/', 
+                    'message' => 'The name cannot contain numbers or special characters.'
+                ])
+            ],
         ])
         ->add('email_rec', EmailType::class, [
             'label' => 'Email',
-            'required' => true, // Ensures a valid email format is entered
+            'required' => true,
+            'constraints' => [
+                    new NotBlank(null, 'Email cannot be empty.'),
+                    new Email(['message' => 'Email {{ value }} is invalid.
+                                             A valid email address should look like: example@email.com']),
+                ],
         ]);
         
        // ->add('user', EntityType::class, [

@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /*#[ORM\Entity(repositoryClass: ReclamationRepository::class)]
 class Reclamation
@@ -61,6 +63,10 @@ class Reclamation
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Le nom est obligatoire.")]
     #[Assert\Length(max: 255, maxMessage: "Le nom ne doit pas dépasser {{ limit }} caractères.")]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z\s]+$/',
+        message: "Le nom ne doit pas contenir de chiffres ou de caractères spéciaux."
+    )]
     private ?string $name_rec = null;
 
     #[ORM\Column(length: 255)]

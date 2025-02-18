@@ -50,6 +50,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+
 
 class ReponseType extends AbstractType
 {
@@ -62,6 +64,10 @@ class ReponseType extends AbstractType
             ])
             ->add('contenu', null, [
                 'label' => 'Contenu',
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(null, 'Message cannot be empty.'),
+                ],
             ])
             ->add('reclamation', EntityType::class, [
                 'class' => Reclamation::class,
