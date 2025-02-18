@@ -29,7 +29,7 @@ final class ReclamationController extends AbstractController
         $reclamation = new Reclamation();
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->handleRequest($request);
-
+      
         if ($form->isSubmitted() && $form->isValid()) {
             $reclamation->setDateRec(new \DateTime());
             $reclamation->setEtat('En cours');

@@ -35,7 +35,6 @@ class Reponse
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Assert\NotBlank(message: "La date de réponse est obligatoire.")]
     private ?\DateTimeInterface $date_rep = null;
 
     #[ORM\Column(length: 255)]

@@ -47,7 +47,6 @@ class Reclamation
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Assert\NotBlank(message: "La date de réclamation est obligatoire.")]
     private ?\DateTimeInterface $date_rec = null;
 
     #[ORM\Column(length: 255)]
@@ -75,7 +74,6 @@ class Reclamation
     private ?string $email_rec = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "L'état est obligatoire.")]
     #[Assert\Length(max: 255, maxMessage: "L'état ne doit pas dépasser {{ limit }} caractères.")]
     private ?string $etat = null;
 
