@@ -85,6 +85,11 @@ class ReponseType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Reponse::class,
+            'method' => 'POST',
+            'attr' => [
+                'id' => 'form_reponse',
+                'enctype' => 'multipart/form-data'
+            ],
         ]);
     }
 }

@@ -159,8 +159,39 @@
     <!-- End Main Top -->
 
 
-    {{ include('reclamation/_form.html.twig', {'button_label': 'Update'}) }}
-    
+   <h1>Mettre à jour la Réclamation</h1>
+
+{{ form_start(form) }}
+
+<div class="form-group">
+    {{ form_label(form.name_rec, 'Nom') }}
+    {{ form_widget(form.name_rec, {'attr': {'class': 'form-control', 'id': 'reclamation_name_rec'}}) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.email_rec, 'Email') }}
+    {{ form_widget(form.email_rec, {'attr': {'class': 'form-control', 'id': 'reclamation_email_rec'}}) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.categorie_rec, 'Catégorie') }}
+    {{ form_widget(form.categorie_rec, {'attr': {'class': 'form-control', 'id': 'reclamation_categorie_rec'}}) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.message_rec, 'Message') }}
+    {{ form_widget(form.message_rec, {'attr': {'class': 'form-control', 'id': 'reclamation_message_rec'}}) }}
+</div>
+
+<div class="form-group">
+    <button type="submit" class="btn">{{ button_label|default('Mettre à jour') }}</button>
+</div>
+
+{{ form_end(form) }}
+
+<div class="text-center">
+    <a href="{{ path('app_reclamation_index') }}" class="btn-secondary">Retour à la liste</a>
+</div>
 
     <a href="{{ path('app_reclamation_index') }}">back to list</a>
 
@@ -250,3 +281,14 @@
     </footer>
     <!-- End Footer  -->
 {% endblock %}
+ {% block javascripts %}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="{{ asset('admin/js/scripts.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="{{ asset('admin/assets/demo/chart-area-demo.js') }}"></script>
+        <script src="{{ asset('admin/assets/demo/chart-bar-demo.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+        <script src="js/datatables-simple-demo.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="{{ asset('js/crud.js') }}"></script>
+        {% endblock %}

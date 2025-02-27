@@ -636,6 +636,34 @@
         <script src="{{ asset('admin/assets/demo/chart-bar-demo.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="{{ asset('js/crud.js') }}"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#reclamationTable').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "language": {
+                    "lengthMenu": "Afficher _MENU_ réclamations par page",
+                    "zeroRecords": "Aucune réclamation trouvée",
+                    "info": "Affichage de _START_ à _END_ sur _TOTAL_ réclamations",
+                    "infoEmpty": "Aucune réclamation disponible",
+                    "infoFiltered": "(filtré de _MAX_ réclamations au total)",
+                    "search": "🔍 Rechercher:",
+                    "paginate": {
+                        "first": "Premier",
+                        "last": "Dernier",
+                        "next": "Suivant",
+                        "previous": "Précédent"
+                    }
+                }
+            });
+        });
+    </script>
         {% endblock %}
     </body>
 </html>

@@ -117,6 +117,11 @@ class ReclamationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Reclamation::class,
+            'method' => 'POST',
+            'attr' => [
+                'id' => 'form_reclamation',
+                'enctype' => 'multipart/form-data'
+            ],
         ]);
     }
 }
