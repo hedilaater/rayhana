@@ -11,6 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Service\PdfService;
+use Dompdf\Dompdf;  
+use Dompdf\Options;
 
 #[Route('/reclamation')]
 final class ReclamationController extends AbstractController
@@ -108,5 +111,40 @@ final class ReclamationController extends AbstractController
             'reclamation' => $reclamation,
             'reponse' => $reclamation->getReponses(),
         ]);
+    }
+
+    #[Route('/pdf/{id}', name: 'reclamation_pdf')]
+    public function generatePdf(EntityManagerInterface $entityManager,$id): Response
+    {
+        // Assuming you fetch your reclamation data here
+        $reclamation = $entityManager->getRepository(Reclamation::class)->find($id);
+
+        if (!$reclamation) {
+            throw $this->createNotFoundException('Reclamation not found');
+        }
+
+        // Render HTML for the PDF
+        $htmlContent = $this->renderView('pdf/reclamation.html.twig', [
+            'reclamation' => $reclamation
+        ]);
+
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isPhpEnabled', true);
+
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($htmlContent);
+
+        $dompdf->setPaper('A4', 'portrait');
+
+        $dompdf->render();
+
+        $pdfContent = $dompdf->output();
+
+        $response = new Response($pdfContent);
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'attachment; filename="reposne.pdf"');
+
+        return $response;
     }
 }

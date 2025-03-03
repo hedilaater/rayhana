@@ -1,0 +1,62 @@
+{# templates/pdf/reclamation.html.twig #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reclamation Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Reclamation Details</h2>
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ reclamation.id }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ reclamation.dateRec ? reclamation.dateRec|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ reclamation.categorieRec }}</td>
+            </tr>
+            <tr>
+                <th>Message</th>
+                <td>{{ reclamation.messageRec }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ reclamation.nameRec }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ reclamation.emailRec }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ reclamation.etat }}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
