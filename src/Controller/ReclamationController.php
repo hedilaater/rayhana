@@ -14,17 +14,54 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Service\PdfService;
 use Dompdf\Dompdf;  
 use Dompdf\Options;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 #[Route('/reclamation')]
 final class ReclamationController extends AbstractController
 {
     #[Route(name: 'app_reclamation_index', methods: ['GET'])]
-    public function index(ReclamationRepository $reclamationRepository): Response
+    public function index(
+        ReclamationRepository $reclamationRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
+        // Fetch filter parameters from the request
+        $etat = $request->query->get('etat');
+        $categorie = $request->query->get('categorieRec');
+
+        // Create the query builder to get reclamations with filtering options
+        $queryBuilder = $reclamationRepository->createQueryBuilder('r');
+
+        // Apply filters to the query if provided
+        if ($etat) {
+            $queryBuilder->andWhere('r.etat = :etat')
+                ->setParameter('etat', $etat);
+        }
+
+        if ($categorie) {
+            $queryBuilder->andWhere('r.categorieRec LIKE :categorieRec')
+                ->setParameter('categorieRec', '%' . $categorie . '%');
+        }
+
+        // Paginate the query results
+        $pagination = $paginator->paginate(
+            $queryBuilder, // The query to paginate
+            $request->query->getInt('page', 1), // Current page number
+            6 // Items per page
+        );
+
+        return $this->render('reclamation/index.html.twig', [
+            'pagination' => $pagination, // Pass the paginated result to the template
+        ]);
+    }
+
+    /*public function index(ReclamationRepository $reclamationRepository): Response
     {
         return $this->render('reclamation/index.html.twig', [
             'reclamations' => $reclamationRepository->findAll(),
         ]);
-    }
+    }*/
 
     #[Route('/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response

@@ -159,62 +159,81 @@
 
     <h1>Reclamation index</h1>
 
-   <div class="container mt-5">
-   <a href="{{ path('app_reclamation_new') }}" class="btn btn-success btn-sm">
-        <i class="fas fa-plus"></i> Add Reclamation
-    </a><br>
+    {# Filter Form #}
+    <form method="get" action="{{ path('app_reclamation_index') }}">
+        <div class="row">
+            <div class="col-md-4">
+                <select name="etat" class="form-control">
+                    <option value="">Filter by Etat</option>
+                    <option value="Finish" {% if app.request.query.get('etat') == 'Finish' %}selected{% endif %}>Finish</option>
+                    <option value="En cours" {% if app.request.query.get('etat') == 'In Progress' %}selected{% endif %}>In Progress</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </div>
+    </form>
+
     <table class="table table-hover table-bordered text-center">
         <thead class="table-dark">
             <tr>
                 <th>Id</th>
-                <th>date</th>
+                <th>Date</th>
                 <th>Categorie</th>
                 <th>Message</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Etat</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            {% for reclamation in reclamations %}
+            {% for reclamation in pagination %}
                 <tr>
-                <td>{{ reclamation.id }}</td>
-                <td>{{ reclamation.dateRec ? reclamation.dateRec|date('Y-m-d') : '' }}</td>
-                <td>{{ reclamation.categorieRec }}</td>
-                <td>{{ reclamation.messageRec }}</td>
-                <td>{{ reclamation.nameRec }}</td>
-                <td>{{ reclamation.emailRec }}</td>
-                <td>{{ reclamation.etat }}</td>
-                <td>
-                    {% if reclamation.etat == "Finish" %}
-                        <a href="{{ path('app_reclamation_show_reponse_user', {'id': reclamation.id}) }}" class="btn btn-success btn-sm">
-                            <i class="fas fa-search"></i> Reponse
+                    <td>{{ reclamation.id }}</td>
+                    <td>{{ reclamation.dateRec ? reclamation.dateRec|date('Y-m-d') : '' }}</td>
+                    <td>{{ reclamation.categorieRec }}</td>
+                    <td>{{ reclamation.messageRec }}</td>
+                    <td>{{ reclamation.nameRec }}</td>
+                    <td>{{ reclamation.emailRec }}</td>
+                    <td>{{ reclamation.etat }}</td>
+                    <td>
+                        {% if reclamation.etat == "Finish" %}
+                            <a href="{{ path('app_reclamation_show_reponse_user', {'id': reclamation.id}) }}" class="btn btn-success btn-sm">
+                                <i class="fas fa-search"></i> Reponse
+                            </a>
+                        {% endif %}
+                        {% if reclamation.etat == "Finish" %}
+                            <a href="{{ path('reclamation_pdf', {'id': reclamation.id}) }}" class="btn btn-success btn-sm">
+                                <i class="fas fa-file"></i> PDF
+                            </a>
+                        {% endif %}
+                        <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-eye"></i> Show
                         </a>
-                    {% endif %}
-                    {% if reclamation.etat == "Finish" %}
-                        <a href="{{ path('reclamation_pdf', {'id': reclamation.id}) }}" class="btn btn-success btn-sm">
-                            <i class="fas fa-file"></i> PDF
+                        <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Edit
                         </a>
-                    {% endif %}
-                    <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}" class="btn btn-primary btn-sm">
-                        <i class="fas fa-eye"></i> Show
-                    </a>
-                    <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}" class="btn btn-warning btn-sm">
-                        <i class="fas fa-edit"></i> Edit
-                    </a>
-                    <a href="{{ path('app_reclamation_delete_delete', {'id': reclamation.id}) }}" class="btn btn-danger btn-sm">
-                        <i class="fas fa-trash"></i> Delete
-                    </a>
-                </td>
-                
-            </tr>
+                        <a href="{{ path('app_reclamation_delete_delete', {'id': reclamation.id}) }}" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                    </td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>
-    
+
+    {# Pagination Controls #}
+   <div class="d-flex justify-content-center">
+    <nav>
+        <ul class="pagination">
+            {{ knp_pagination_render(pagination) }}
+        </ul>
+    </nav>
 </div>
 
+</div>
 
     <!-- Start Footer  -->
     <footer>
