@@ -134,4 +134,16 @@ final class ReponseController extends AbstractController
 
         return $this->redirectToRoute('app_reponse_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/stats/reclamation', name: 'app_reclamation_stats')]
+    public function reclamationStats(ReclamationRepository $reclamationRepository): Response
+    {
+        $reclamationsByDate = $reclamationRepository->countReclamationsByDate();
+        $reclamationsByEtat = $reclamationRepository->countReclamationsByEtat();
+    
+        return $this->render('reponse/admin_reclamation_stats.html.twig', [
+            'reclamationsByDate' => $reclamationsByDate,
+            'reclamationsByEtat' => $reclamationsByEtat,
+        ]);
+    }
 }

@@ -40,4 +40,30 @@ class ReclamationRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function countReclamationsByDate(): array
+    {
+        $results = $this->createQueryBuilder('r')
+            ->select("r.date_rec as fullDate, COUNT(r.id) as count")
+            ->groupBy('fullDate')
+            ->orderBy('fullDate', 'ASC')
+            ->getQuery()
+            ->getResult();
+        
+        foreach ($results as &$result) {
+            $result['date'] = $result['fullDate']->format('Y-m-d');
+            unset($result['fullDate']);
+        }
+    
+        return $results;
+    }
+
+    public function countReclamationsByEtat(): array
+    {
+        return $this->createQueryBuilder('r')
+            ->select("r.etat as etat, COUNT(r.id) as count")
+            ->groupBy('r.etat')
+            ->getQuery()
+            ->getResult();
+    }
 }

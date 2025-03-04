@@ -40,7 +40,7 @@ final class ReclamationController extends AbstractController
         }
 
         if ($categorie) {
-            $queryBuilder->andWhere('r.categorieRec LIKE :categorieRec')
+            $queryBuilder->andWhere('r.categorie_rec LIKE :categorieRec')
                 ->setParameter('categorieRec', '%' . $categorie . '%');
         }
 

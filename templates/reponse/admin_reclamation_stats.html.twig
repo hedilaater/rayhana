@@ -1,0 +1,65 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Statistiques des Réclamations{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2 class="text-center">Statistiques des Réclamations</h2>
+
+    <div class="row">
+        <!-- Chart for Reclamations by Date -->
+        <div class="col-md-6">
+            <canvas id="reclamationsByDateChart"></canvas>
+        </div>
+
+        <!-- Chart for Reclamations by Etat -->
+        <div class="col-md-6">
+            <canvas id="reclamationsByEtatChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Reclamations by Date
+        var reclamationsByDateCtx = document.getElementById('reclamationsByDateChart').getContext('2d');
+        var reclamationsByDateChart = new Chart(reclamationsByDateCtx, {
+            type: 'line',
+            data: {
+                labels: {{ reclamationsByDate|map(d => d.date)|json_encode|raw }},
+                datasets: [{
+                    label: 'Nombre de réclamations par jour',
+                    data: {{ reclamationsByDate|map(d => d.count)|json_encode|raw }},
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Reclamations by Etat
+        var reclamationsByEtatCtx = document.getElementById('reclamationsByEtatChart').getContext('2d');
+        var reclamationsByEtatChart = new Chart(reclamationsByEtatCtx, {
+            type: 'pie',
+            data: {
+                labels: {{ reclamationsByEtat|map(e => e.etat)|json_encode|raw }},
+                datasets: [{
+                    label: 'Réclamations par État',
+                    data: {{ reclamationsByEtat|map(e => e.count)|json_encode|raw }},
+                    backgroundColor: ['#28a745', '#dc3545', '#ffc107', '#007bff'],
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    });
+</script>
+{% endblock %}
